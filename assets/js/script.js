@@ -1,8 +1,49 @@
-
 {var date = document.querySelector("#currentdate");
 var currenttime= moment();
 
 date.textContent= currenttime.format ("MMMM Do, YYYY - hh:mm A")}
+
+//edit, adding work-to-do to schedule
+$(".schedule").on("click", "p", function(){
+    //copying the lesson
+       // get current text of p element
+     var text = $(this)
+       .text()
+       .trim();
+   
+     // replace p element with a new textarea
+     var textInput = $("<textarea>").addClass("form-control").val(text);
+     $(this).replaceWith(textInput);
+    
+       
+     // auto focus new element
+     textInput.trigger("focus");
+});
+
+// editable field was un-focused
+$(".schedule").on("blur", "textarea", function() {
+       // get current value of textarea
+       var text = $(this).val();
+      
+       // recreate p element
+       var taskP = $("<p>")
+         .addClass("col-9 p-4")
+         .attr("id","work-schedule")
+         .text(text);
+       
+       // replace textarea with new content
+       $(this).replaceWith(taskP);
+});
+
+
+$(".schedule").on("click","button",function(){
+
+    var text= $("#work-schedule").text();
+
+    localStorage.setItem("task", JSON.stringify(text))
+})
+
+
 
 
 {var schedule= $('span').text().trim();
@@ -19,7 +60,7 @@ console.log (ftime.diff(ctime,"hours"))
 if (ctime.isAfter(ftime)){
     $("h3").addClass("list-group-item-secondary");
     }
-else if (ftime.diff(ctime,"hours")=0){
+else if (ftime.diff(ctime,"hours")===0){
     $("h3").addClass("list-group-item-warning");
     }
 else if (ctime.isBefore(ftime)) {
@@ -27,38 +68,19 @@ else if (ctime.isBefore(ftime)) {
     }
 };
 
-$(".schedule").on("click", "p", function(){
- //copying the lesson
-    // get current text of p element
-  var text = $(this)
-    .text()
-    .trim();
 
-  // replace p element with a new textarea
-  var textInput = $("<textarea>").addClass("form-control").val(text);
-  $(this).replaceWith(textInput);
- 
-    
-  // auto focus new element
-  textInput.trigger("focus");
-});
-// editable field was un-focused
-$(".schedule").on("blur", "textarea", function() {
-    // get current value of textarea
-    var text = $(this).val();
+$(".schedule").on("click","button",function(){
 
-    // recreate p element
-    var taskP = $("<p>")
-      .addClass("p-4")
-      .text(text);
-          
-    //savetask
-  
-        localStorage.setItem("task", JSON.stringify(text))
+    var text= $("#work-schedule").text();
 
-    // replace textarea with new content
-    $(this).replaceWith(taskP);
-  });
+    localStorage.setItem("task", JSON.stringify(text))
+})
 
-  ///loadtask
-  //loadTasks();
+
+
+
+
+
+var loadTasks = function() {
+    tasks = JSON.parse(localStorage.getItem("task"));}
+  loadTasks();
