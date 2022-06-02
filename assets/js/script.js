@@ -87,6 +87,14 @@ $(".schedule").on("blur", "textarea", function() {
 //save task with button
 
 
+$(".schedule").on("click","button",function(){
+
+    var text= $(this).parent().find("p").text();
+ 
+    console.log (text);
+ 
+    localStorage.setItem("task", JSON.stringify(text))
+})
 
 
 
