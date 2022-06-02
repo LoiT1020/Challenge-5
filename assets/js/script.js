@@ -91,9 +91,8 @@ $(".schedule").on("click","button",function(){
 
     var text= $(this).parent().find("p").text();
  
-    console.log (text);
+    var settime=  $(this).parent().parent().find('span').text();
  
-    localStorage.setItem("task", JSON.stringify(text))
 })
 
 
