@@ -3,6 +3,53 @@ var currenttime= moment();
 
 date.textContent= currenttime.format ("MMMM Do, YYYY - hh:mm A")}
 
+var TimeObj={};
+
+/*var loadTasks = function() {
+    TimeObj = JSON.parse(localStorage.getItem("task"));
+  
+    // if nothing in localStorage, create a new object to track all task status arrays
+    if (!TimeObj) {
+      TimeObj = {
+        time:[],
+        text:[]
+      };
+    }
+  
+    // loop over object properties
+    $.each(TimeObj, function(list, arr) {
+      // then loop over sub-array
+      arr.forEach(function(task) {
+        createTask(task.text,list);
+      });
+    });
+};*/
+
+//time block color
+$('span').each(function() { 
+    var hi= $( this ).text().trim();
+    
+    var time = moment(hi,"hh:mmA","L");
+    var attime= moment().format('hh:mm A');
+
+//via the link https://stackoverflow.com/questions/23620498/comparing-two-times-with-moment-js
+var ctime=moment(attime, 'hh:mma');
+
+
+if (time.diff(ctime,"hours")<0){
+    $(this).addClass("bg-secondary");
+    }
+else if (time.diff(ctime,"hours")===0){
+    $(this).addClass("bg-warning");
+    }
+else if (time.diff(ctime,"hours")>0) {
+    $(this).addClass("bg-success");
+    }
+
+});
+  
+
+
 //edit, adding work-to-do to schedule
 $(".schedule").on("click", "p", function(){
     //copying the lesson
@@ -27,56 +74,26 @@ $(".schedule").on("blur", "textarea", function() {
       
        // recreate p element
        var taskP = $("<p>")
-         .addClass("col-9 p-4")
+         .addClass("col-9 py-4")
          .attr("id","work-schedule")
          .text(text);
        
        // replace textarea with new content
        $(this).replaceWith(taskP);
+       
 });
 
 
-$(".schedule").on("click","button",function(){
-
-    var text= $("#work-schedule").text();
-
-    localStorage.setItem("task", JSON.stringify(text))
-})
-
-
-
-
-{var schedule= $('span').text().trim();
-
-var time = moment(schedule,"hh:mm A","L");
-var attime= moment().format('hh:mm A');
-
-//via the link https://stackoverflow.com/questions/23620498/comparing-two-times-with-moment-js
-var ftime= moment(time, 'hh:mma');
-var ctime=moment(attime, 'hh:mma');
-
-console.log (ftime.diff(ctime,"hours"))
-
-if (ctime.isAfter(ftime)){
-    $("h3").addClass("list-group-item-secondary");
-    }
-else if (ftime.diff(ctime,"hours")===0){
-    $("h3").addClass("list-group-item-warning");
-    }
-else if (ctime.isBefore(ftime)) {
-    $("h3").addClass("list-group-item-success");
-    }
-};
+//save task with button
 
 
 $(".schedule").on("click","button",function(){
 
-    var text= $("#work-schedule").text();
-
-    localStorage.setItem("task", JSON.stringify(text))
+    var text= $(this).parent().find("p").text();
+ 
+    var settime=  $(this).parent().parent().find('span').text();
+ 
 })
-
-
 
 
 
