@@ -93,11 +93,12 @@ $(".schedule").on("click","button",function(){
  
     var settime=  $(this).parent().parent().find('span').text();
  
+    localStorage.setItem("timeObj", JSON.stringify(text));
 })
 
 
 
 
 var loadTasks = function() {
-    tasks = JSON.parse(localStorage.getItem("task"));}
+    tasks = JSON.parse(localStorage.getItem("timeObj"));}
   loadTasks();
